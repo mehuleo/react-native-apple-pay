@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import ApplePay, { DetailsData, MethodData } from 'react-native-apple-payment';
+import ApplePay, { DetailsData, MethodData } from 'react-native-apple-pay';
 
 export default function App() {
   const Method: MethodData = {
-    countryCode: 'UA',
-    currencyCode: 'UAH',
-    merchantIdentifier: 'merchant.com.onipko',
-    supportedNetworks: ['Visa', 'MasterCard', 'AmEx'],
+    countryCode: 'US',
+    currencyCode: 'USD',
+    merchantIdentifier: 'merchant.com.abc',
+    supportedNetworks: ['Visa', 'MasterCard'],
   };
 
   const Options: DetailsData = {
