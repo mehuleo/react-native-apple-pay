@@ -1,5 +1,5 @@
 #import <React/RCTBridgeModule.h>
-#import "ApplePay.h"
+#import "ApplePay-Bridging-Header.h"
 
 @interface RCT_EXTERN_MODULE(ApplePay, NSObject)
 
