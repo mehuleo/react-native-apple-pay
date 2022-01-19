@@ -1,6 +1,6 @@
-# react-native-apple-payment
+# react-native-apple-pay
 
-Apple Pay implementation for React Native (Only IOS)
+Apple Pay implementation for React Native (Only IOS >= 11.0)
 
 <div style="display: flex;">
     <img style="margin-right: 20px" src="images/img1.png" width="250" height="530" alt="img1" />
@@ -11,9 +11,9 @@ Apple Pay implementation for React Native (Only IOS)
 ## Installation
 
 ```sh
-yarn add react-native-apple-payment
+npm i --save git+https://github.com/mehuleo/react-native-apple-pay.git
 
-cd ios && pod install
+npx pod-install ios
 ```
 
 ## Usage
@@ -49,7 +49,7 @@ export type TransactionIdentifier = string;
 ### Code
 ```ts
 
-import ApplePay, { MethodData, DetailsData } from "react-native-apple-payment";
+import ApplePay, { MethodData, DetailsData } from "react-native-apple-pay";
 
 const payment = new ApplePay(method as MethodData, details as DetailsData);
 

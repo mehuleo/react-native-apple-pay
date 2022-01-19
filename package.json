@@ -1,7 +1,7 @@
 {
-  "name": "react-native-apple-payment",
-  "version": "1.1.1",
-  "description": "Apple Pay implementation for React Native",
+  "name": "react-native-apple-pay",
+  "version": "2.0.0",
+  "description": "For integrating Apple Pay with your React Native",
   "main": "src/index",
   "module": "src/index",
   "types": "src/index.d.ts",
@@ -29,16 +29,15 @@
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android"
+    "ios"
   ],
-  "repository": "https://github.com/yevheniionipko/react-native-apple-payment",
-  "author": "Yevhenii Onipko <y.onipko@kyivstar.net> (https://github.com/yevheniionipko)",
+  "repository": "https://github.com/mehuleo/react-native-apple-pay",
+  "author": "Mehul Marakana <mehul.marakana@gmail.com> (https://github.com/mehuleo)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yevheniionipko/react-native-apple-payment/issues"
+    "url": "https://github.com/mehuleo/react-native-apple-pay/issues"
   },
-  "homepage": "https://github.com/yevheniionipko/react-native-apple-payment#readme",
+  "homepage": "https://github.com/mehuleo/react-native-apple-pay#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.16.2",
@@ -116,7 +115,10 @@
       ]
     }
   },
-  "eslintIgnore": ["node_modules/", "lib/"],
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
   "prettier": {
     "quoteProps": "consistent",
     "singleQuote": true,
@@ -127,7 +129,11 @@
   "@react-native-community/bob": {
     "source": "src",
     "output": "lib",
-    "targets": ["commonjs", "module", "typescript"]
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   },
   "publishConfig": {
     "access": "public"
