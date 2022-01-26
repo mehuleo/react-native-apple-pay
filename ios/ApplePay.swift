@@ -27,22 +27,25 @@ class ApplePay: UIViewController {
         if #available(iOS 11.0, *) {
             request.supportedCountries = [method["countryCode"] as! String]
             
-            request.requiredBillingContactFields = [PKContactField.postalAddress]
+            request.requiredBillingContactFields = [
+                PKContactField.postalAddress,
+                PKContactField.name,
+            ]
             request.requiredShippingContactFields = [
                 PKContactField.phoneNumber,
                 PKContactField.emailAddress,
-                PKContactField.postalAddress,
-                PKContactField.name,
+//                PKContactField.postalAddress,
             ]
         }
     }
 
     @objc(initApplePay:withRejecter:)
-    func initApplePay(resolve: @escaping RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
+    func initApplePay(resolve: @escaping RCTPromiseResolveBlock, reject:RCTPromiseRejectBlock) -> Void {
         guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks!) else {
             print("Can not make payment")
             return
         }
+        print("Here.... init")
         self.resolve = resolve
         if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
             controller.delegate = self
@@ -65,14 +68,16 @@ class ApplePay: UIViewController {
 extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         controller.dismiss(animated: true, completion: nil)
+        print("Here.... fin")
     }
 
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        print("Here....1")
         if #available(iOS 11.0, *) {
             var jsonPaymentResponse = """
             {
                 "token": {
-                    "paymentData": "\(String(decoding: payment.token.paymentData, as: UTF8.self))",
+                    "paymentData": \(String(decoding: payment.token.paymentData, as: UTF8.self)),
                     "paymentMethod": {
                         "network": "\(payment.token.paymentMethod.network!.rawValue)",
                         "displayName": "\(payment.token.paymentMethod.displayName!)",
@@ -92,17 +97,17 @@ extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
                     "subLocality": "\(payment.billingContact?.postalAddress?.subLocality ?? "")"
                 },
                 "shippingContact": {
-                    "givenName": "\(payment.shippingContact?.name?.givenName ?? "")",
-                    "familyName": "\(payment.shippingContact?.name?.familyName ?? "")",
+                    "givenName": "\(payment.billingContact?.name?.givenName ?? "")",
+                    "familyName": "\(payment.billingContact?.name?.familyName ?? "")",
                     "emailAddress": "\(payment.shippingContact?.emailAddress ?? "")",
                     "phoneNumber": "\(payment.shippingContact?.phoneNumber?.stringValue ?? "")",
-                    "addressLines": \((payment.shippingContact?.postalAddress?.street ?? "").components(separatedBy: "\n")),
-                    "administrativeArea": "\(payment.shippingContact?.postalAddress?.subAdministrativeArea ?? "")",
-                    "country": "\(payment.shippingContact?.postalAddress?.country ?? "")",
-                    "countryCode": "\(payment.shippingContact?.postalAddress?.isoCountryCode ?? "")",
-                    "postalCode": "\(payment.shippingContact?.postalAddress?.postalCode ?? "")",
-                    "subAdministrativeArea": "\(payment.shippingContact?.postalAddress?.subAdministrativeArea ?? "")",
-                    "subLocality": "\(payment.shippingContact?.postalAddress?.subLocality ?? "")"
+                    "addressLines": \((payment.billingContact?.postalAddress?.street ?? "").components(separatedBy: "\n")),
+                    "administrativeArea": "\(payment.billingContact?.postalAddress?.subAdministrativeArea ?? "")",
+                    "country": "\(payment.billingContact?.postalAddress?.country ?? "")",
+                    "countryCode": "\(payment.billingContact?.postalAddress?.isoCountryCode ?? "")",
+                    "postalCode": "\(payment.billingContact?.postalAddress?.postalCode ?? "")",
+                    "subAdministrativeArea": "\(payment.billingContact?.postalAddress?.subAdministrativeArea ?? "")",
+                    "subLocality": "\(payment.billingContact?.postalAddress?.subLocality ?? "")"
                 }
             }
             """
@@ -111,8 +116,10 @@ extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
             
             completion(.success)
         } else {
+            print("Here....2")
             self.resolve!("Required iOS 11 and above...")
             completion(.failure)
         }
+        print("Here....99")
     }
 }
