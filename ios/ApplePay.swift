@@ -20,7 +20,7 @@ class ApplePay: UIViewController {
         request.currencyCode = method["currencyCode"] as! String
         request.countryCode = method["countryCode"] as! String
         request.merchantIdentifier = method["merchantIdentifier"] as! String
-        request.merchantCapabilities = PKMerchantCapability.capabilityDebit
+        request.merchantCapabilities = [PKMerchantCapability.capability3DS, PKMerchantCapability.capabilityDebit]
         request.supportedNetworks = self.paymentNetworks!
         request.paymentSummaryItems = [paymentItem]
         
