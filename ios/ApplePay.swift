@@ -68,11 +68,9 @@ class ApplePay: UIViewController {
 extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         controller.dismiss(animated: true, completion: nil)
-        print("Here.... fin")
     }
 
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
-        print("Here....1")
         if #available(iOS 11.0, *) {
             var jsonPaymentResponse = """
             {
@@ -116,10 +114,8 @@ extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
             
             completion(.success)
         } else {
-            print("Here....2")
             self.resolve!("Required iOS 11 and above...")
             completion(.failure)
         }
-        print("Here....99")
     }
 }
