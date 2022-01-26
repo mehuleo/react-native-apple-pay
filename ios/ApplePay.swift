@@ -45,7 +45,6 @@ class ApplePay: UIViewController {
             print("Can not make payment")
             return
         }
-        print("Here.... init")
         self.resolve = resolve
         if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
             controller.delegate = self
