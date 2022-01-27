@@ -45,6 +45,7 @@ class ApplePay: UIViewController {
             print("Can not make payment")
             return
         }
+        print("Here.... init")
         self.resolve = resolve
         if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
             controller.delegate = self
@@ -86,12 +87,12 @@ extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
                     "givenName": "\(payment.billingContact?.name?.givenName ?? "")",
                     "familyName": "\(payment.billingContact?.name?.familyName ?? "")",
                     "addressLines": \((payment.billingContact?.postalAddress?.street ?? "").components(separatedBy: "\n")),
-                    "administrativeArea": "\(payment.billingContact?.postalAddress?.subAdministrativeArea ?? "")",
+                    "administrativeArea": "\(payment.billingContact?.postalAddress?.state ?? "")",
                     "country": "\(payment.billingContact?.postalAddress?.country ?? "")",
                     "countryCode": "\(payment.billingContact?.postalAddress?.isoCountryCode ?? "")",
                     "postalCode": "\(payment.billingContact?.postalAddress?.postalCode ?? "")",
                     "subAdministrativeArea": "\(payment.billingContact?.postalAddress?.subAdministrativeArea ?? "")",
-                    "subLocality": "\(payment.billingContact?.postalAddress?.subLocality ?? "")"
+                    "subLocality": "\(payment.billingContact?.postalAddress?.city ?? "")"
                 },
                 "shippingContact": {
                     "givenName": "\(payment.billingContact?.name?.givenName ?? "")",
@@ -99,12 +100,12 @@ extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
                     "emailAddress": "\(payment.shippingContact?.emailAddress ?? "")",
                     "phoneNumber": "\(payment.shippingContact?.phoneNumber?.stringValue ?? "")",
                     "addressLines": \((payment.billingContact?.postalAddress?.street ?? "").components(separatedBy: "\n")),
-                    "administrativeArea": "\(payment.billingContact?.postalAddress?.subAdministrativeArea ?? "")",
+                    "administrativeArea": "\(payment.billingContact?.postalAddress?.state ?? "")",
                     "country": "\(payment.billingContact?.postalAddress?.country ?? "")",
                     "countryCode": "\(payment.billingContact?.postalAddress?.isoCountryCode ?? "")",
                     "postalCode": "\(payment.billingContact?.postalAddress?.postalCode ?? "")",
                     "subAdministrativeArea": "\(payment.billingContact?.postalAddress?.subAdministrativeArea ?? "")",
-                    "subLocality": "\(payment.billingContact?.postalAddress?.subLocality ?? "")"
+                    "subLocality": "\(payment.billingContact?.postalAddress?.city ?? "")"
                 }
             }
             """
