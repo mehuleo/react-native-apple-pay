@@ -63,6 +63,11 @@ class ApplePay: UIViewController {
             resolve(false)
         }
     }
+
+    @objc
+    static func requiresMainQueueSetup() -> Bool {
+        return false
+    }
 }
 
 extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
