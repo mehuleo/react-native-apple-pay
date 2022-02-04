@@ -1,6 +1,6 @@
 {
   "name": "react-native-apple-pay",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "For integrating Apple Pay with your React Native",
   "main": "src/index",
   "module": "src/index",
