@@ -116,7 +116,7 @@ extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
                 }
             }
             """
-            jsonPaymentResponse = jsonPaymentResponse.filter({!" \n\t\r".contains($0)})
+            jsonPaymentResponse = jsonPaymentResponse.filter({!"\n\t\r".contains($0)})
             self.resolve!(jsonPaymentResponse)
             
             completion(.success)
