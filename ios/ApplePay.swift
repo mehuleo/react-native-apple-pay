@@ -5,11 +5,14 @@ class ApplePay: UIViewController {
     private var rootViewController: UIViewController = UIApplication.shared.keyWindow!.rootViewController!
     private var request: PKPaymentRequest = PKPaymentRequest()
     private var resolve: RCTPromiseResolveBlock?
+    private var didRespond: Bool = false
     private var paymentNetworks: [PKPaymentNetwork]?
 
 
     @objc(invokeApplePay:details:)
     private func invokeApplePay(method: NSDictionary, details: NSDictionary) -> Void {
+        self.didRespond = false
+
         self.paymentNetworks = method["supportedNetworks"] as? [PKPaymentNetwork]
         guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks!) else {
             print("Can not make payment")
@@ -45,7 +48,7 @@ class ApplePay: UIViewController {
             print("Can not make payment")
             return
         }
-        print("Here.... init")
+
         self.resolve = resolve
         if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
             controller.delegate = self
@@ -72,10 +75,16 @@ class ApplePay: UIViewController {
 
 extension ApplePay: PKPaymentAuthorizationViewControllerDelegate {
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+
+        if (self.didRespond == false) {
+            self.resolve!("{}")
+        }
         controller.dismiss(animated: true, completion: nil)
     }
 
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
+        self.didRespond = true
+
         if #available(iOS 11.0, *) {
             var jsonPaymentResponse = """
             {
